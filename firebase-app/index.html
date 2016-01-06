@@ -23,12 +23,13 @@
     <script src="../../build/react-dom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
     <script type="text/babel">    
-      // define the owner component
+      // cp = component
+      // Definition of the owner of a cp...
       // an owner is a cp that set the props of another cp
       var MessageBox = React.createClass({        
-        // data that changes over time
-        // DOM re-rendered each time this changes
-        // for passing data from top level component
+        // getInitialState: For state data that changes over time.
+        // The DOM re-rendered each time state data changes
+        // It is used for passing data from top level cp, to it's children
         getInitialState: function() {
           return {
             message: 'I live in State',
@@ -44,10 +45,10 @@
         },
 
         handleAdd: function(e){
-          // 'this' is autominded to the react cp
+          // 'this' is auto binded to the react cp
           console.log(this);
-          // access rendered DOM nodes through refs
-          // used for cases where you need to extract a value from a DOM node
+          // Access rendered DOM nodes through refs
+          // Refs are used for cases where you need to extract a value from a DOM node
           // access the ref property to get back the DOM node back
           var newMessage = this.refs.newMessage.value;
           var currentMessages = this.state.messages;
@@ -60,7 +61,7 @@
         deleteMessage: function(message){
           // callback function sent to child cp's
           console.log('deleting');
-          
+          // remove the message sent back from the child cp
           var newMessages = _.without(this.state.messages, message);
           
           this.setState({
@@ -69,11 +70,13 @@
         },
 
         render: function() {
-
+          // use a ternary operator to to set style based on state
           var inlineStyles = {
             display: this.state.isVisible ? 'block' : 'none'
           };
 
+          // create an array or JSX nodes using a map function
+          // send a key, message and a function as props to the child cp
           var messages = this.state.messages.map((message, i) => <SubMessage key={i} message={message} onDelete={this.deleteMessage} />);
 
           return (
@@ -93,22 +96,24 @@
             );
           }        
         });
-
+      
+      // The is a child cp so cannot access state in its parent
+      // it is done using a callback sent as a prop from the container cp
+      // props are for pushing state data down to child components
+      // props are immutable        
       var SubMessage = React.createClass({
         handleDelete: function(e){
-          // send a message upwards, does not delete message itself
+          // send a message upwards using the prop, 
+          // does not delete message itself
           this.props.onDelete(this.props.message);
         },
 
-        // This is a child component so cant access state in its parent
-        // done using a callback
-        // set a schema for the props; does validation
+        // used set a schema for the props; does validation
         propTypes: {
           message : React.PropTypes.string.isRequired
         },
 
-        // props a for pushing state data down to child components
-        // props are immutable
+        // gives props a default if data is not sent down from container cp
         getDefaultProps: function() {
           return {
             message: 'It\'s good to see you'
