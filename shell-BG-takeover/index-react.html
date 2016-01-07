@@ -1,0 +1,247 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Share Calculator</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js" type="text/javascript" charset="utf-8" async defer></script>
+    <style>
+        .result {
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 30;
+            text-align: left;
+            padding-bottom: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+    <script type="text/babel">
+    
+    
+    var StockCalc = React.createClass({
+        getInitialState: function() {
+            return {
+                bgPrice: 0,
+                rdsPrice: 0 ,
+                noshares: 1124
+            };
+        },
+
+        saveBGPrices: function(bgPrice) {
+            this.setState({
+                bgPrice: bgPrice 
+            });
+        },
+
+        saveRDSPrices: function(rdsPrice) {
+            this.setState({
+                rdsPrice: rdsPrice 
+            });
+        },
+
+        allCash: function(){
+            return 5;
+        },
+
+        allShare: function(){
+            return <h1>hello</h1>;
+        },
+
+        alternative: function(){
+            return <h1>hello</h1>;
+        },
+
+        render: function() {
+            return (
+                <div className="container">
+                    <div className="page-header">
+                        <h1>Shell Takeover of BG Group</h1>
+                        <small>
+                        Royal Dutch Shell are taking over BG Group. 
+                        How much would my investment be worth under the various 
+                        offers they are making to share holders?
+                        </small>
+                    </div>
+                    <div className="row">
+                        <div className="col-xs-6">
+                            <BGFormGroup onBGPriceChange={this.saveBGPrices} bgPrice={this.state.bgPrice}/>
+                        </div>
+                        <div className="col-xs-6">
+                            <RDSFormGroup onRDSPriceChange={this.saveRDSPrices} rdsPrice={this.state.rdsPrice}/>
+                        </div>
+                    </div>
+                    <br></br>
+                    <div className="row">
+                        <div className="col-xs-6">
+                            <AllCash />
+                        </div>
+                        <div className="col-xs-6 result">
+                            {this.allCash()}
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-xs-6">
+                            <AllShare />
+                        </div>
+                        <div className="col-xs-6 result">
+                            {this.allShare()}
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-xs-6">
+                            <Alternative />
+                        </div>
+                        <div className="col-xs-6 result">
+                            {this.alternative()}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+    
+    });
+    
+    var BGFormGroup = React.createClass({
+
+        getDefaultProps: function() {
+            return {
+                values: {
+                    bgPrice: 0,
+                    rdsPrice: 0
+                }
+            };
+        },
+
+        saveChange: function(){
+            // save values from the DOM
+            var bgPrice = /^\d+$/.test(this.refs.bg.value) ? parseInt(this.refs.bg.value) : 0;            
+            this.props.onBGPriceChange(bgPrice); 
+            
+        },
+    
+        render: function() {
+            return (
+                <span>
+                    
+                      <div className="form-group">
+                        <label className="sr-only" htmlFor="bg">Amount (in pence)</label>
+                        <div className="input-group">
+                          <div className="input-group-addon">Pence</div>
+                          <input type="text" className="form-control input-lg" id="bg" placeholder="BG Group stock price" ref="bg" value={this.props.bgPrice} onChange={this.saveChange} />                          
+                        </div>
+                      </div>                                            
+                    
+                </span>
+            );
+        }
+    
+    });
+
+    var RDSFormGroup = React.createClass({
+
+        getDefaultProps: function() {
+            return {
+                values: {
+                    bgPrice: 0,
+                    rdsPrice: 0
+                }
+            };
+        },
+
+        saveChange: function(){
+            // save values from the DOM
+            var rdsPrice = /^\d+$/.test(this.refs.rds.value) ? parseInt(this.refs.rds.value): 0;            
+            this.props.onRDSPriceChange(rdsPrice);             
+        },
+    
+        render: function() {
+            return (
+                <span>
+                    
+                      <div className="form-group">
+                        <label className="sr-only" htmlFor="rds">Amount (in pence)</label>
+                        <div className="input-group">
+                          <div className="input-group-addon">Pence</div>
+                          <input type="text" className="form-control input-lg" id="rds" placeholder="Shell stock price" ref="rds" value={this.props.rdsPrice} onChange={this.saveChange}/>                          
+                        </div>
+                      </div>                      
+                    
+                </span>
+            );
+        }
+    
+    });
+
+    var AllCash = React.createClass({
+    
+        render: function() {
+            return (
+                <div className="panel panel-default">
+                    <div className="panel-heading">All Cash Subject To Scaling</div>
+                    <div className="panel-body">
+                        Panel content
+                    </div>
+                </div>
+            );
+        }
+    
+    });
+
+    var AllShare = React.createClass({
+    
+        render: function() {
+            return (
+                <div className="panel panel-default">
+                    <div className="panel-heading">All share subject to scaling</div>
+                    <div className="panel-body">
+                        Panel content
+                    </div>
+                </div>
+            );
+        }
+    
+    });
+
+    var Alternative = React.createClass({
+    
+        render: function() {
+            return (
+                <div className="panel panel-default">
+                    <div className="panel-heading">Shell A Share Alternative</div>
+                    <div className="panel-body">
+                        Panel content
+                    </div>
+                </div>
+            );
+        }
+    
+    });
+
+    
+
+    // render the component
+    ReactDOM.render(
+        <StockCalc />, 
+        document.getElementById("app"), 
+        () => { console.log('after render');}
+    ); 
+    
+    </script>
+    
+</body>
+
+</html>
