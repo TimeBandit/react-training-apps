@@ -26,7 +26,16 @@
       // cp = component
       // What is the owner of a cp?
       // An owner is a cp that set the props of another cp
-      var MessageBox = React.createClass({        
+      var MessageBox = React.createClass({       
+        componentWillMount: function() {
+           // no access to DOM since its not been rendered
+         }, 
+
+         componentDidMount: function() {
+           // can access the DOM since it has rendered
+           // used to load in initial state to load in the state
+         },
+
         // getInitialState: For state data that changes over time.
         // The DOM re-rendered each time state data changes
         // It is used for passing data from top level cp, to it's children
