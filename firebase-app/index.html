@@ -26,14 +26,27 @@
       // cp = component
       // What is the owner of a cp?
       // An owner is a cp that set the props of another cp
-      var MessageBox = React.createClass({       
+      var MessageBox = React.createClass({    
+           // THE MOUNTING PHASE - 2 PARTS
         componentWillMount: function() {
            // no access to DOM since its not been rendered
+           // do any checks or logic before the component renders
          }, 
 
          componentDidMount: function() {
            // can access the DOM since it has rendered
            // used to load in initial state to load in the state
+         },
+
+         // THE UPDATE PHASE e.g
+         componentWillUpdate: function(nextProps, nextState) {
+           // a place where you can check old states against the new ones
+           // and set something of interest
+         },
+
+         // THE UNMOUNT PHASE for cleanup when you remove the component from the DOM
+         componentWillUpdate: function(nextProps, nextState) {
+           
          },
 
         // getInitialState: For state data that changes over time.
@@ -43,13 +56,7 @@
           return {
             message: 'I live in State',
             isVisible: true,
-            messages: [
-            'I like the world',
-            'Coffee flavoured ice cream',
-            'My spoon is too big',
-            'Tuesday is coming',
-            'I\'m a banana'
-            ]
+            messages: []
           };
         },
 
@@ -65,6 +72,9 @@
           this.setState({
             messages: currentMessages.concat([newMessage]) 
           });
+
+          // clear the form field
+          this.refs.newMessage.value = "";
         },
 
         deleteMessage: function(message){
