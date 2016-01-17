@@ -78,7 +78,7 @@
         },
 
         deleteMessage: function(message){
-          // callback function sent to child cp's
+          // callback function sent to child cp's.
           console.log('deleting');
           // remove the message sent back from the child cp
           var newMessages = _.without(this.state.messages, message);
