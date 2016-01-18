@@ -1,2 +1,2 @@
 # react-training-apps
-A container for soucre code created in the process of learning react
+A container for soucre created in the process of learning react.
